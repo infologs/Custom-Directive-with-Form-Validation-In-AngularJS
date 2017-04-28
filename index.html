@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="app01">
+<head>
+    <title></title>
+    <script src="js/angular.js"></script>
+    <script src="scripts/app.js"></script>
+    <style type="text/css">
+        input.ng-invalid {
+            background-color: pink;
+        }
+        input.ng-valid {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <div ng-controller="controller1 as cont1">
+        <form name="Form1" novalidate ng-submit="cont1.SubmitForm()">
+        <!--
+        $pristine = No fields have been modified yet
+        $dirty = One or more have been modified
+        $invalid = The form content is not valid
+        $valid = The form content is valid
+        $submitted = The form is submitted
+         -->
+            <table border="1">
+                <tr>
+                    <th>First Name</th>
+                    <td>
+                        <input type="text" name="FirstName" ng-model="cont1.FirstName" required>
+                    </td>
+                    <td>
+                        <span ng-hide="Form1.FirstName.$valid">Firstname is required.</span>
+                        <!--
+                    
+                            $untouched The field has not been touched yet
+                            $touched The field has been touched
+                            $pristine The field has not been modified yet
+                            $dirty The field has been modified
+                            $invalid The field content is not valid
+                            $valid The field content is valid
+
+                         -->                        
+                    </td>
+                </tr>
+                <tr>
+                    <th>EmailID</th>
+                    <td>
+                        <input type="email" name="EmailID" ng-model="cont1.EmailID" required>
+                    </td>
+                    <td>
+                        <span ng-hide="!Form1.EmailID.$error.required">EmailID is required.</span>
+                        <span ng-hide="!Form1.EmailID.$error.email">Invalid Email ID.</span>                        
+                    </td>
+                </tr>
+                <tr>
+                    <th>PhoneNo</th>
+                    <td>
+                        <input type="text" name="PhoneNo" ng-model="cont1.PhoneNo" ng-minlength="10" ng-maxlength="10" required ng-pattern="/^\+?\d{2}[- ]?\d{3}[- ]?\d{5}$/">
+                    </td>
+                    <td>
+                        <span ng-hide="!Form1.PhoneNo.$error.required">PhoneNo is required.</span>                 
+                        <span ng-hide="!Form1.PhoneNo.$error.pattern">Please enter valid Mobile No.</span>
+                        <span ng-hide="!Form1.PhoneNo.$error.minlength">Please enter atleast 10 digits.</span>
+                        <span ng-hide="!Form1.PhoneNo.$error.maxlength">More then 10 digits are not allowed</span>
+                    </td>
+                </tr>   
+                <tr>
+                    <th>Custom Validation</th>
+                    <td>
+                        <input type="text" name="CustomValidate" ng-model="cont1.CustomValidate" required ab-contains>
+                    </td>
+                    <td>
+                        <span ng-hide="!Form1.CustomValidate.$error.required">Custom Value is required.</span>
+                        <span ng-hide="Form1.CustomValidate.$valid">"ab" should be available</span>                       
+                    </td>
+                </tr>             
+                <tr>
+                    <td colspan="3">
+                        <input type="submit" value="Submit Form">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
